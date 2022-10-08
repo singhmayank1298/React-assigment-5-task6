@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useEffect } from "react";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -9,12 +9,12 @@ function App() {
   const [error, seterror] = useState(null);
   const [intervalId, setIntervalId] = useState(0);
 
-  const fetchMoviesHandler = async () => {
+  const fetchMoviesHandler = useCallback(async () => {
     setisLoding(true);
     seterror(null);
 
     try {
-      const reponse = await fetch("https://swapi.py4e.com/api/film/");
+      const reponse = await fetch("https://swapi.py4e.com/api/films/");
       console.log(reponse); // VV. Importent we should use axios because fetch will not throw a real error means when get response like 401 then there error massege is somthing So fetch will not so this,We have to handle error manualy other wise it throw error in then rest line where that fetch variable is use
       if (!reponse.ok) {
         throw new Error("Something went wrong ....Retrying");
@@ -56,11 +56,15 @@ function App() {
         } catch (error) {
           console.log(error);
         }
-      }, 1000);
+      }, 5000);
       setIntervalId(id);
       setisLoding(false);
     }
-  };
+  }, []); // [ ] this should be needed like useEffect
+
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
 
   const cancelHandler = () => {
     clearInterval(intervalId);
