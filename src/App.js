@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useEffect } from "react";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
+import Form from "./components/Form/Form";
 
 function App() {
   const [Movies, setMovies] = useState([]);
@@ -48,7 +49,9 @@ function App() {
 
       const id = setInterval(async () => {
         try {
-          const response = await fetch("https://swapi.py4e.com/api/films/");
+          const response = await fetch(
+            "https://react-http-f431c-default-rtdb.firebaseio.com/movies.json"
+          ); // from /movies is extra ,it means we are making a new node in database
           if (!response.ok) {
             throw new Error("ndidni");
           }
@@ -66,6 +69,10 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
+  const addMovieHandler = (NewMovieObj) => {
+    console.log(NewMovieObj);
+  };
+
   const cancelHandler = () => {
     clearInterval(intervalId);
     console.log(intervalId);
@@ -73,6 +80,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <Form addMovieHandler={addMovieHandler}></Form>
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>

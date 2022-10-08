@@ -1,0 +1,21 @@
+.nsjs {
+  display: table-caption;
+  container-type: inline-size;
+  font-weight: 300;
+}
+
+.nsjs input {
+  width: 555px;
+  border: double;
+  height: 33px;
+  border-radius: 33px;
+  margin-bottom: 22px;
+}
+
+.nsjs textarea {
+  width: 555px;
+  border: double;
+  height: 99px;
+
+  margin-bottom: 22px;
+}
